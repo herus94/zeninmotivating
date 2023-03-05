@@ -1,3 +1,3 @@
 # zeninmotivating
 
-motivational quotes app that uses zenquote's API
+flutter motivational quotes app that uses zenquote's API
