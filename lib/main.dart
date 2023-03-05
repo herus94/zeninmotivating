@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:zenin_motivating/pages/motivating_page.dart';
+import 'package:json_theme/json_theme.dart';
+import 'package:flutter/services.dart'; // For rootBundle
+import 'dart:convert'; // For jsonDecode
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
-  runApp(const MyApp());
+  final themeStr = await rootBundle.loadString('lib/assets/appainter_theme.json');
+  final themeJson = jsonDecode(themeStr);
+  final theme = ThemeDecoder.decodeThemeData(themeJson)!;
+
+  runApp(MyApp(theme: theme));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+   final ThemeData theme;
 
+  const MyApp({Key? key, required this.theme}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'ZenInMotivating'),
+      theme: widget.theme,
     );
   }
 }
@@ -51,10 +55,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final pages = [
     PageViewModel(
-      title: "ZenInMotivating",
+      title: "Inspire yourself",
       bodyWidget: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
@@ -64,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       image: const Center(child: Icon(Icons.lightbulb)),
     ),
     PageViewModel(
-      title: "ZenInMotivating",
+      title: "Discover",
       bodyWidget: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
@@ -86,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        //backgroundColor: Color(0xFF673AB7),
       ),
       body: Center(
           child: IntroductionScreen(
