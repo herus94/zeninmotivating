@@ -89,12 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        //backgroundColor: Color(0xFF673AB7),
       ),
       body: Center(
           child: IntroductionScreen(
               pages: pages,
-              showNextButton: false,
+              allowImplicitScrolling: true,
+              showNextButton: true,
+              showSkipButton: true,
+              next: const Icon(Icons.arrow_forward),
+              skip: const Text('Skip', style: TextStyle(fontWeight: FontWeight.w600)),
               done: const Text("Get Motivated"),
               onDone: () {
                 Navigator.push(

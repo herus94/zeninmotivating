@@ -40,6 +40,7 @@ dependencies:
   http: ^0.13.5
   google_fonts: ^4.0.3
   json_theme: ^4.0.0
+  filter_list: ^1.0.2
 
 dev_dependencies:
   flutter_test:
